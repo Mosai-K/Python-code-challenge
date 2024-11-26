@@ -1,4 +1,3 @@
-import re
 import sys, os
 
 def calculate_rank(inputData):
@@ -31,9 +30,13 @@ def calculate_rank(inputData):
     elif score == score1:
       rank[team1] += 1
       rank[team] += 1
+  return rank
 
+def sort_team_ranks(rank):
   order_teams = sorted(rank.items(), key=lambda item: (-item[1], item[0]))
+  return order_teams
 
+def format_ranking_results(order_teams):
   output = []
   points = ""
   current_rank = 0
@@ -46,10 +49,12 @@ def calculate_rank(inputData):
     last_point = score
   return "\n".join(output)
 
+file_path = 'file.txt'
 def main():
   with open(file_path, "r") as file:
     lines = file.readlines()
-    print(calculate_rank(lines))
-
+    rankings = calculate_rank(lines)
+    print(format_ranking_results(sort_team_ranks(rankings)))
+    
 if __name__ == "__main__":
     main()
